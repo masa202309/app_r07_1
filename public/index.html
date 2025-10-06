@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>生成AI業務活用スキル試験</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app__header">
+        <div class="app__title">
+          <h1>生成AI業務活用スキル試験</h1>
+          <p class="app__subtitle">
+            三択10問で生成AI活用力を診断し、総合点を5段階で評価します。
+          </p>
+        </div>
+        <div class="app__meta">
+          <span class="badge">Beta</span>
+        </div>
+      </header>
+
+      <section class="card" aria-labelledby="config-heading">
+        <div class="card__header">
+          <h2 id="config-heading">試験生成</h2>
+          <p class="card__lead">問題数やカテゴリを設定して試験を作成します。</p>
+        </div>
+        <form id="exam-config" class="form" novalidate>
+          <div class="form__row">
+            <label for="question-count" class="form__label">問題数</label>
+            <input
+              id="question-count"
+              name="questionCount"
+              type="number"
+              min="5"
+              max="10"
+              value="10"
+              class="form__input"
+            />
+            <span class="form__hint">最大10問。PoCでは5問なども指定可能。</span>
+          </div>
+
+          <details class="form__details">
+            <summary>カテゴリをカスタマイズ</summary>
+            <p class="form__hint">未設定の場合は標準の5カテゴリが使用されます。</p>
+            <div class="form__textarea-wrap">
+              <textarea
+                id="categories"
+                name="categories"
+                rows="4"
+                placeholder="例: プロンプト設計とLLM活用\nデータ・セキュリティとコンプライアンス"
+              ></textarea>
+            </div>
+          </details>
+
+          <button id="generate-btn" type="submit" class="button primary">試験を生成</button>
+        </form>
+        <div id="config-status" class="status" role="status" aria-live="polite"></div>
+      </section>
+
+      <section id="exam-section" class="card card--hidden" aria-labelledby="exam-heading">
+        <div class="card__header">
+          <h2 id="exam-heading">試験</h2>
+          <div class="tag-list" id="summary-tags"></div>
+        </div>
+
+        <div id="scorebands" class="scorebands"></div>
+
+        <form id="exam-form" class="exam" novalidate>
+          <div id="questions" class="exam__list"></div>
+          <div class="exam__actions">
+            <button id="submit-btn" type="submit" class="button primary">回答を送信</button>
+            <button id="reset-btn" type="button" class="button">再生成</button>
+          </div>
+          <div id="exam-status" class="status" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <section id="result-section" class="card card--hidden" aria-labelledby="result-heading">
+        <div class="card__header">
+          <h2 id="result-heading">診断結果</h2>
+        </div>
+        <div id="result" class="result"></div>
+      </section>
+    </div>
+
+    <template id="question-template">
+      <fieldset class="question">
+        <legend class="question__title"></legend>
+        <div class="question__meta"></div>
+        <div class="question__options"></div>
+      </fieldset>
+    </template>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

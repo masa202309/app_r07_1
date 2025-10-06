@@ -1,0 +1,29 @@
+{
+  "name": "line-dify-movie-bot-simple",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Simplest LINE ↔ Dify bridge for a movie recommendation chatbot",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^7.7.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}
