@@ -1,4 +1,4 @@
-const { requestChatCompletion } = require('./openaiClient');
+const { requestChatCompletion } = require('./aiClient');
 const crypto = require('crypto');
 
 const MIN_QUESTION_COUNT = 5;
@@ -129,14 +129,15 @@ async function requestOpenAIExam(prompt) {
     'あなたは企業の試験問題を生成する専門家です。必ず純粋なJSONのみを出力し、説明文やコードフェンスは含めないでください。';
 
   const text = await requestChatCompletion({
-    model: process.env.EXAM_OPENAI_MODEL || process.env.DEFAULT_OPENAI_MODEL || 'gpt-4o-mini',
+    model: process.env.EXAM_AI_MODEL || process.env.DEFAULT_AI_MODEL,
     messages: [
       { role: 'system', content: systemMessage },
       { role: 'user', content: prompt },
     ],
-    temperature: process.env.EXAM_OPENAI_TEMPERATURE || 0.2,
-    maxTokens: process.env.EXAM_OPENAI_MAX_TOKENS || 2000,
+    temperature: process.env.EXAM_AI_TEMPERATURE || 0.2,
+    maxTokens: process.env.EXAM_AI_MAX_TOKENS || 2000,
     responseFormat: { type: 'json_object' },
+    providerName: process.env.EXAM_AI_PROVIDER,
   });
 
   return text;

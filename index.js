@@ -10,7 +10,7 @@ const {
   getPublicQuestions,
   SCORE_BANDS,
 } = require('./services/examService');
-const { requestChatCompletion } = require('./services/openaiClient');
+const { requestChatCompletion } = require('./services/aiClient');
 
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
@@ -155,7 +155,7 @@ async function handleEvent(event) {
 
   try {
     const answer = await requestChatCompletion({
-      model: process.env.LINE_OPENAI_MODEL || process.env.DEFAULT_OPENAI_MODEL || 'gpt-4o-mini',
+      model: process.env.LINE_AI_MODEL || process.env.DEFAULT_AI_MODEL,
       messages: [
         {
           role: 'system',
@@ -164,8 +164,9 @@ async function handleEvent(event) {
         },
         { role: 'user', content: text },
       ],
-      temperature: process.env.LINE_OPENAI_TEMPERATURE || 0.5,
-      maxTokens: process.env.LINE_OPENAI_MAX_TOKENS || 600,
+      temperature: process.env.LINE_AI_TEMPERATURE || 0.5,
+      maxTokens: process.env.LINE_AI_MAX_TOKENS || 600,
+      providerName: process.env.LINE_AI_PROVIDER,
     });
 
     return client.replyMessage(event.replyToken, {
@@ -173,7 +174,7 @@ async function handleEvent(event) {
       text: answer,
     });
   } catch (error) {
-    console.error('[line] OpenAI応答生成に失敗しました:', error);
+    console.error('[line] AI応答生成に失敗しました:', error);
     return client.replyMessage(event.replyToken, {
       type: 'text',
       text: 'すみません、うまく返答できませんでした。時間をおいて試してみてください。',
